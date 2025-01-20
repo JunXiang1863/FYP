@@ -1,15 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}", // Ensure all your relevant files are listed here
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
-      borderColor: {
-        border: "hsl(var(--border))", // Use the CSS variable `--border` for border color
+      colors: {
+        gray: {
+          100: "#f3f4f6",
+        },
+        blue: {
+          600: "#2563eb",
+          700: "#1d4ed8",
+        },
       },
     },
   },
-  plugins: [],
 };
 
