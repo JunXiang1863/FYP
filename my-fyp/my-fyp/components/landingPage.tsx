@@ -29,20 +29,13 @@ export function LandingPage() {
   const registrationRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToRegistration = () => {
-    if (isLogin) {
-      // If currently showing login, switch to registration
-      setIsLogin(false);
-      setRegistrationStep(1);
-    } else {
-      // If currently showing registration, switch back to login
-      setIsLogin(true);
-    }
-
+    setIsLogin(false); // Ensure registration form is shown
+    setRegistrationStep(1); // Reset registration step
     setTimeout(() => {
       if (registrationRef.current) {
-        registrationRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        registrationRef.current.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
+    }, 0); // Delay ensures UI updates before scrolling
   };
 
 
@@ -303,8 +296,6 @@ export function LandingPage() {
         </div>
       </section>
 
-      
-
 
       {/* Features Section */}
       <section className="py-20">
@@ -401,7 +392,7 @@ export function LandingPage() {
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4 text-center text-white">
+        <div className="container mx-auto px-4 text-center">
           <p>&copy; 2023 DeliTrack. All rights reserved.</p>
         </div>
       </footer>
