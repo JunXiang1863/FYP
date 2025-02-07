@@ -1,0 +1,35 @@
+{
+  "name": "my-fyp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@prisma/client": "latest",
+    "next": "14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "latest",
+    "@radix-ui/react-label": "latest",
+    "@radix-ui/react-radio-group": "latest",
+    "@radix-ui/react-toast": "latest",
+    "class-variance-authority": "latest",
+    "clsx": "latest",
+    "tailwind-merge": "latest",
+    "tailwindcss-animate": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "prisma": "latest",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0"
+  }
+} 
