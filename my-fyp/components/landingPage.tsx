@@ -270,6 +270,25 @@ export function LandingPage() {
     </form>
   )
 
+  // Update the DashboardImage component
+  const DashboardImage = () => {
+    // Define the SVG directly as a data URL
+    const placeholderSVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='%239ca3af' text-anchor='middle' dy='.3em'%3EDeliTrack Dashboard%3C/text%3E%3C/svg%3E`;
+
+    return (
+      <div className="relative w-[400px] h-[400px] bg-gray-100 rounded-lg shadow-lg">
+        <Image
+          src={placeholderSVG}
+          alt="DeliTrack Dashboard"
+          fill
+          style={{ objectFit: 'contain' }}
+          className="p-4"
+          priority
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
@@ -291,14 +310,8 @@ export function LandingPage() {
               {isLogin ? "Create an Account" : "Back to Login"}
             </Button>
           </div>
-          <div className="md:w-1/2 ml-10">
-            <Image
-              src="/placeholder.svg?height=400&width=400"
-              alt="DeliTrack Dashboard"
-              width={400}
-              height={400}
-              className="rounded-lg shadow-lg"
-            />
+          <div className="md:w-1/2 ml-10 flex justify-center items-center">
+            <DashboardImage />
           </div>
         </div>
       </section>

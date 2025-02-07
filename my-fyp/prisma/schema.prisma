@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,3 +7,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Supplier {
+  id               String       @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String       @unique
+  password         String
+  companyName      String
+  phone            String
+  address          String
+  latitude         Float?
+  longitude        Float?
+  deliveries       Delivery[]   // Supplier manages multiple deliveries
+  retailSellers    SupplierRetailSeller[] // Suppliers can be linked to multiple Retail Sellers
+  drivers          Driver[]     // Supplier can manage multiple drivers
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model RetailSeller {
+  id               String       @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String       @unique
+  password         String
+  companyName      String
+  phone            String
+  address          String
+  latitude         Float?
+  longitude        Float?
+  deliveries       Delivery[]   // Retail Seller can receive multiple deliveries
+  suppliers        SupplierRetailSeller[] // Retail Sellers can have multiple Suppliers
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model SupplierRetailSeller {
+  id               String @id @default(uuid())
+  supplierId       String
+  retailSellerId   String
+
+  supplier         Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  retailSeller     RetailSeller @relation(fields: [retailSellerId], references: [id], onDelete: Cascade)
+
+  createdAt        DateTime @default(now())
+
+  @@unique([supplierId, retailSellerId]) // Prevent duplicate connections
+}
+
+model Driver {
+  id               String     @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String     @unique
+  password         String
+  phone            String
+  deliveries       Delivery[] // Driver handles multiple deliveries
+  supplierId       String
+  supplier         Supplier   @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Delivery {
+  id               String     @id @default(uuid())
+  deliveryId       String     @unique @default(uuid()) // Unique identifier for tracking
+  supplierId       String
+  retailSellerId   String
+  driverId         String?
+  status           DeliveryStatus @default(PENDING)
+  address          String
+  latitude         Float?
+  longitude        Float?
+  notes            String?
+  estimatedTime    DateTime?
+  
+  supplier         Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  retailSeller     RetailSeller @relation(fields: [retailSellerId], references: [id], onDelete: Cascade)
+  driver           Driver? @relation(fields: [driverId], references: [id], onDelete: SetNull)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+enum DeliveryStatus {
+  PENDING
+  APPROVED
+  DISPATCHED
+  OUT_FOR_DELIVERY
+  ARRIVED_AT_LOCATION
+  DELIVERED
+}
